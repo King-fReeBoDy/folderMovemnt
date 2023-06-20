@@ -12,11 +12,11 @@ interface IFunctions {
 const Sidebar = ({ handleSidebarToggle, toggleSidebar }: IFunctions) => {
   return (
     <div
-      className={`bg-neutral-100 flex flex-col justify-between p-7 h-screen`}
+      className={`bg-neutral-100 flex flex-col justify-between p-5 h-screen`}
     >
       <div className="">
         <button
-          className="-ml-2 py-2 flex items-center"
+          className="ml-1 py-2 flex items-center"
           onClick={handleSidebarToggle}
         >
           <div className="bg-blue-600 rounded-full p-2">
@@ -24,23 +24,23 @@ const Sidebar = ({ handleSidebarToggle, toggleSidebar }: IFunctions) => {
           </div>
           <p className={`ml-2 ${toggleSidebar ? "block" : "hidden"}`}>Menu</p>
         </button>
-        <button className="flex items-center py-2 ">
+        <button className="flex items-center my-2 hover:bg-neutral-300 rounded-full p-3 ">
           <RiHome5Line className="text-2xl" />
           <p className={`ml-2 ${toggleSidebar ? "block" : "hidden"}`}>Home</p>
         </button>
-        <button className="flex items-center py-2">
+        <button className="flex items-center my-2 hover:bg-neutral-300 rounded-full p-3">
           <BiSearch className="text-2xl" />
           <p className={`ml-2 ${toggleSidebar ? "block" : "hidden"}`}>Search</p>
         </button>
       </div>
       <div>
-        <button className="flex items-center py-2 ">
+        <button className="flex items-center my-2 hover:bg-neutral-300 rounded-full p-3">
           <AiOutlineUserAdd className="text-2xl" />
           <p className={`ml-2 ${toggleSidebar ? "block" : "hidden"}`}>
             Add User
           </p>
         </button>
-        <button className="flex items-center py-2 ">
+        <button className="flex items-center my-2 hover:bg-neutral-300 rounded-full p-3">
           <RiLogoutBoxRLine className="text-2xl" />
           <p className={`ml-2 ${toggleSidebar ? "block" : "hidden"}`}>Logout</p>
         </button>

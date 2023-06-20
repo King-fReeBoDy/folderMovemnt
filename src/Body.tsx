@@ -4,9 +4,18 @@ import { BiSearch } from "react-icons/bi";
 import { CiTrash, CiEdit } from "react-icons/ci";
 import data from "./data";
 import Header from "./Header";
-import { IAddPatientToggle } from "./App";
 
-const Body = ({ handleToggleAddPatient }: IAddPatientToggle) => {
+interface IBody {
+  handleAddPatientModal: () => void;
+  handleEditPatientModal: () => void;
+  handleDeletePatientModal: () => void;
+}
+
+const Body = ({
+  handleAddPatientModal,
+  handleEditPatientModal,
+  handleDeletePatientModal,
+}: IBody) => {
   const [border, setBorder] = useState<number>();
 
   const handleBorder = (idx: number) => {
@@ -21,7 +30,7 @@ const Body = ({ handleToggleAddPatient }: IAddPatientToggle) => {
         </h1>
         <button
           className="flex items-center bg-blue-600 text-white px-3 py-2 shadow-md rounded-lg"
-          onClick={handleToggleAddPatient}
+          onClick={handleAddPatientModal}
         >
           <AiOutlinePlus />
           <p className="ml-2">Add Record</p>
@@ -50,6 +59,9 @@ const Body = ({ handleToggleAddPatient }: IAddPatientToggle) => {
           <thead className="">
             <tr className="">
               <th className="border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
+                Date Of Issue
+              </th>
+              <th className="border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
                 OPD Number
               </th>
               <th className="border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
@@ -70,13 +82,11 @@ const Body = ({ handleToggleAddPatient }: IAddPatientToggle) => {
               <th className="border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
                 Folder Issued By
               </th>
-              <th className="border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
-                Date Of Issue
-              </th>
+
               <th className="border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
                 Folder Received By
               </th>
-              <th className="border-b-2 px-5 py-3 whitespace-nowrap border-r-2">
+              <th className="border-b-2 px-5 py-3 whitespace-nowrap">
                 Date of Receiving
               </th>
             </tr>
@@ -90,7 +100,7 @@ const Body = ({ handleToggleAddPatient }: IAddPatientToggle) => {
                     key={idx}
                     className={`${
                       border === idx
-                        ? "border-4 border-blue-200 rounded-lg"
+                        ? "border-4 border-blue-200 rounded-full"
                         : ""
                     } hover:bg-gray-100  `}
                     onClick={() => handleBorder(idx)}
@@ -138,11 +148,17 @@ const Body = ({ handleToggleAddPatient }: IAddPatientToggle) => {
       </main>
       {border !== undefined && border >= 0 && (
         <div className="flex items-center my-5 px-5">
-          <button className="flex items-center bg-blue-600 px-5 py-2 text-white border-2 border-blue-600 rounded-lg shadow-lg">
+          <button
+            onClick={handleEditPatientModal}
+            className="flex items-center bg-blue-600 px-5 py-2 text-white border-2 border-blue-600 rounded-lg shadow-lg"
+          >
             <CiEdit />
             <p className="ml-2">Edit</p>
           </button>
-          <button className="flex items-center ml-4 border-2 border-red-500 text-red-500 px-5 py-2 rounded-lg shadow-lg">
+          <button
+            onClick={handleDeletePatientModal}
+            className="flex items-center ml-4 border-2 border-red-500 text-red-500 px-5 py-2 rounded-lg shadow-lg"
+          >
             <CiTrash />
             <p className="ml-2">Delete</p>
           </button>

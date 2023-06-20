@@ -7,7 +7,7 @@ const Header = () => {
       <div className="flex items-center">
         <p className="text-sm">Admin</p>
         <p className="h-7 w-7 rounded-full text-center text-sm bg-red-600 pt-1 ml-2 text-white">
-          D
+          A
         </p>
       </div>
     </section>
