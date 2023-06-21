@@ -22,8 +22,7 @@ const Body = ({
     setBorder(idx);
   };
   return (
-    <section className="w-full  h-screen overflow-auto">
-      <Header />
+    <section className="w-full">
       <div className="flex items-center justify-between p-5">
         <h1 className="text-4xl font-bold my-5 text-black">
           📁 Folder Movement

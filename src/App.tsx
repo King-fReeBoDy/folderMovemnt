@@ -5,6 +5,12 @@ import Sidebar from "./Sidebar";
 import AddRecord from "./AddRecord";
 import EditRecord from "./EditRecord";
 import DeleteRecord from "./DeleteRecord";
+import { Routes, Route } from "react-router-dom";
+import LoginPage from "./LoginPage";
+import SharedLayout from "./SharedLayout";
+import Home from "./Home";
+import Search from "./Search";
+import AddUser from "./AddUser";
 
 function App() {
   const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -27,30 +33,16 @@ function App() {
     setDeleteRecordModal(!deleteRecordModal);
   };
   return (
-    <div className="grid grid-cols-12 text-gray-600 w-full text-sm font-light">
-      <div className={`${toggleSidebar ? "col-span-2" : "col-span-1"} `}>
-        <Sidebar
-          handleSidebarToggle={handleSidebarToggle}
-          toggleSidebar={toggleSidebar}
-        />
-      </div>
-      <div className={`${toggleSidebar ? "col-span-10" : "col-span-11"}`}>
-        <Body
-          handleAddPatientModal={handleAddPatientModal}
-          handleEditPatientModal={handleEditPatientModal}
-          handleDeletePatientModal={handleDeletePatientModal}
-        />
-      </div>
-      {addPatientModal && (
-        <AddRecord handleAddPatientModal={handleAddPatientModal} />
-      )}
-      {editRecordModal && (
-        <EditRecord handleEditPatientModal={handleEditPatientModal} />
-      )}
-      {deleteRecordModal && (
-        <DeleteRecord handleDeletePatientModal={handleDeletePatientModal} />
-      )}
-    </div>
+    <>
+      <Routes>
+        <Route index element={<LoginPage />} />
+        <Route path="/" element={<SharedLayout />}>
+          <Route index element={<Home />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/adduser" element={<AddUser />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 

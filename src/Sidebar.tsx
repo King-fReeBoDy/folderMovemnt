@@ -3,6 +3,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { RiHome5Line, RiLogoutBoxRLine } from "react-icons/ri";
 import { BiSearch } from "react-icons/bi";
 import { AiOutlineUserAdd } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 interface IFunctions {
   handleSidebarToggle: () => void;
@@ -11,9 +12,7 @@ interface IFunctions {
 
 const Sidebar = ({ handleSidebarToggle, toggleSidebar }: IFunctions) => {
   return (
-    <div
-      className={`bg-neutral-100 flex flex-col justify-between p-5 h-screen`}
-    >
+    <div className="bg-neutral-100 flex flex-col justify-between p-5 h-screen">
       <div className="">
         <button
           className="ml-1 py-2 flex items-center"
@@ -24,22 +23,38 @@ const Sidebar = ({ handleSidebarToggle, toggleSidebar }: IFunctions) => {
           </div>
           <p className={`ml-2 ${toggleSidebar ? "block" : "hidden"}`}>Menu</p>
         </button>
-        <button className="flex items-center my-2 hover:bg-neutral-300 rounded-full p-3 ">
-          <RiHome5Line className="text-2xl" />
-          <p className={`ml-2 ${toggleSidebar ? "block" : "hidden"}`}>Home</p>
-        </button>
-        <button className="flex items-center my-2 hover:bg-neutral-300 rounded-full p-3">
-          <BiSearch className="text-2xl" />
-          <p className={`ml-2 ${toggleSidebar ? "block" : "hidden"}`}>Search</p>
-        </button>
+        <Link to="/">
+          <button className="flex items-center my-2 hover:bg-neutral-300 rounded-full p-3 ">
+            <RiHome5Line className="text-2xl" />
+            <p className={`ml-2 ${toggleSidebar ? "block" : "hidden"}`}>Home</p>
+          </button>
+        </Link>
+        <Link to="/search">
+          <button className="flex items-center my-2 hover:bg-neutral-300 rounded-full p-3">
+            <BiSearch className="text-2xl" />
+            <p className={`ml-2 ${toggleSidebar ? "block" : "hidden"}`}>
+              Search
+            </p>
+          </button>
+        </Link>
       </div>
       <div>
-        <button className="flex items-center my-2 hover:bg-neutral-300 rounded-full p-3">
-          <AiOutlineUserAdd className="text-2xl" />
+        <div className="flex items-center my-2 hover:bg-neutral-300 rounded-full p-3">
+          <button className="h-5 w-10 bg-neutral-300 rounded-full flex items-center px-1 justify-start">
+            <p className="rounded-full h-3 w-3 bg-neutral-600 p-2"></p>
+          </button>
           <p className={`ml-2 ${toggleSidebar ? "block" : "hidden"}`}>
-            Add User
+            Light Mode
           </p>
-        </button>
+        </div>
+        <Link to="/adduser">
+          <button className="flex items-center my-2 hover:bg-neutral-300 rounded-full p-3">
+            <AiOutlineUserAdd className="text-2xl" />
+            <p className={`ml-2 ${toggleSidebar ? "block" : "hidden"}`}>
+              Add User
+            </p>
+          </button>
+        </Link>
         <button className="flex items-center my-2 hover:bg-neutral-300 rounded-full p-3">
           <RiLogoutBoxRLine className="text-2xl" />
           <p className={`ml-2 ${toggleSidebar ? "block" : "hidden"}`}>Logout</p>
