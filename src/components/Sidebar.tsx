@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RiHome5Line, RiLogoutBoxRLine } from "react-icons/ri";
 import { BiSearch } from "react-icons/bi";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 interface IFunctions {
   handleSidebarToggle: () => void;
@@ -11,6 +12,7 @@ interface IFunctions {
 }
 
 const Sidebar = ({ handleSidebarToggle, toggleSidebar }: IFunctions) => {
+  const [toggleTheme, setToggleTheme] = useState(false);
   return (
     <div className="bg-neutral-100 flex flex-col justify-between p-5 h-screen">
       <div className="">
@@ -40,11 +42,19 @@ const Sidebar = ({ handleSidebarToggle, toggleSidebar }: IFunctions) => {
       </div>
       <div>
         <div className="flex items-center my-2 hover:bg-neutral-300 rounded-full p-3">
-          <button className="h-5 w-10 bg-neutral-300 rounded-full flex items-center px-1 justify-start">
-            <p className="rounded-full h-3 w-3 bg-neutral-600 p-2"></p>
+          <button
+            className={`h-5 w-10 bg-neutral-400 rounded-full flex items-center px-1  ${
+              toggleTheme ? "justify-end" : "justify-start"
+            }`}
+            onClick={() => setToggleTheme(!toggleTheme)}
+          >
+            <motion.p
+              layout
+              className="rounded-full h-3 w-3 bg-neutral-600 p-2"
+            ></motion.p>
           </button>
           <p className={`ml-2 ${toggleSidebar ? "block" : "hidden"}`}>
-            Light Mode
+            {toggleTheme ? "Dark Mode" : "Light Mode"}
           </p>
         </div>
         <Link to="/adduser">

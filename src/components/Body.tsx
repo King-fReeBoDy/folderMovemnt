@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { AiOutlineTable, AiOutlinePlus } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { CiTrash, CiEdit } from "react-icons/ci";
-import data from "./data";
-import Header from "./Header";
+import data from "../data";
+import { Link } from "react-router-dom";
 
 interface IBody {
   handleAddPatientModal: () => void;
@@ -36,20 +36,22 @@ const Body = ({
         </button>
       </div>
       <div className="flex justify-between items-center text-sm border-b-2 px-5">
-        <button className="flex items-center focus:border-b-2 px-4 py-2 focus:border-black focus:text-black focus:font-bold">
+        <button className="flex items-center  px-4 py-2 focus:text-black focus:font-bold">
           <AiOutlineTable />
           <p className="ml-2">All Records</p>
         </button>
         <div className="flex items-center">
-          <button className="px-4 py-2 focus:border-b-2 focus:border-black focus:text-black focus:font-bold">
+          <button className="px-4 py-2 focus:text-black focus:font-bold">
             Export
           </button>
-          <button className="px-4 py-2 focus:border-b-2 focus:border-black focus:text-black focus:font-bold">
+          <button className="px-4 py-2 focus:text-black focus:font-bold">
             Sort
           </button>
-          <button className="px-4 py-2 focus:border-b-2 focus:border-black focus:text-black focus:font-bold">
-            <BiSearch />
-          </button>
+          <Link to="/search">
+            <button className="px-4 py-2 focus:text-black focus:font-bold">
+              <BiSearch className="text-base" />
+            </button>
+          </Link>
         </div>
       </div>
 

@@ -1,5 +1,3 @@
-import React from "react";
-
 const Header = () => {
   return (
     <nav className="sticky top-0 left-0 right-0 flex justify-between items-center border-b-2 pb-3 bg-white p-5">

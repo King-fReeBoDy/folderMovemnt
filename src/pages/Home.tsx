@@ -1,15 +1,13 @@
 import { useState } from "react";
-import Body from "./Body";
-import Header from "./Header";
+import Body from "../components/Body";
+import AddRecord from "../components/AddRecord";
+import EditRecord from "../components/EditRecord";
+import DeleteRecord from "../components/DeleteRecord";
 
 const Home = () => {
-  const [toggleSidebar, setToggleSidebar] = useState(false);
   const [addPatientModal, setAddPatientModal] = useState(false);
   const [editRecordModal, setEditRecordModal] = useState(false);
   const [deleteRecordModal, setDeleteRecordModal] = useState(false);
-  const handleSidebarToggle = () => {
-    setToggleSidebar(!toggleSidebar);
-  };
 
   const handleAddPatientModal = () => {
     setAddPatientModal(!addPatientModal);
@@ -23,13 +21,22 @@ const Home = () => {
   };
   return (
     <div>
-      <div className={`${toggleSidebar ? "col-span-10" : "col-span-11"}`}>
+      <div>
         <Body
           handleAddPatientModal={handleAddPatientModal}
           handleEditPatientModal={handleEditPatientModal}
           handleDeletePatientModal={handleDeletePatientModal}
         />
       </div>
+      {addPatientModal && (
+        <AddRecord handleAddPatientModal={handleAddPatientModal} />
+      )}
+      {editRecordModal && (
+        <EditRecord handleEditPatientModal={handleEditPatientModal} />
+      )}
+      {deleteRecordModal && (
+        <DeleteRecord handleDeletePatientModal={handleDeletePatientModal} />
+      )}
     </div>
   );
 };
