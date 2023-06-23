@@ -1,3 +1,4 @@
+import { invoke } from "@tauri-apps/api";
 import { FormEvent, useState } from "react";
 import { BsPerson } from "react-icons/bs";
 import { RiLock2Line } from "react-icons/ri";
@@ -10,17 +11,18 @@ const LoginPage = ({ handleLogin }: ILoginPage) => {
   const [loginUserName, setLoginUserName] = useState("");
   const [loginUserPassword, setLoginUserPassword] = useState("");
 
-  const handleLoginFormSubmit = (event: FormEvent) => {
+  const handleLoginFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (!loginUserName || !loginUserPassword) return;
 
     setLoginUserName("");
     setLoginUserPassword("");
-    const newData = {
-      loginUserName,
-      loginUserPassword,
-    };
-    handleLogin(newData);
+
+    const user = JSON.stringify({
+      username: loginUserName,
+      password: loginUserPassword,
+    });
+    console.log(await invoke("login_command", { user }));
   };
 
   return (
