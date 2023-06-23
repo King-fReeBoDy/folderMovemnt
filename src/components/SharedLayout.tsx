@@ -1,24 +1,22 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import LoginPage from "../pages/LoginPage";
+import { AuthContext } from "../context/AuthContext";
 
 const SharedLayout = () => {
-  const [loginUser, setLoginUser] = useState<undefined | {}>();
+  // const [loginUser, setLoginUser] = useState<undefined | {}>();
+  const { loggedInUser } = useContext(AuthContext);
   const [toggleSidebar, setToggleSidebar] = useState(false);
 
   const handleSidebarToggle = () => {
     setToggleSidebar(!toggleSidebar);
   };
 
-  const handleLogin = (data: object) => {
-    setLoginUser(data);
-  };
-
   return (
     <>
-      {loginUser ? (
+      {loggedInUser ? (
         <div className="grid grid-cols-12 text-gray-600 w-full text-sm font-light ">
           <div className={`${toggleSidebar ? "col-span-2" : "col-span-1"} `}>
             <Sidebar
@@ -37,7 +35,7 @@ const SharedLayout = () => {
           </div>
         </div>
       ) : (
-        <LoginPage handleLogin={handleLogin} />
+        <LoginPage />
       )}
     </>
   );

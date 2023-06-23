@@ -1,28 +1,41 @@
+import { useContext } from "react";
 import { invoke } from "@tauri-apps/api";
 import { FormEvent, useState } from "react";
 import { BsPerson } from "react-icons/bs";
 import { RiLock2Line } from "react-icons/ri";
+import { AuthContext } from "../context/AuthContext";
+import { saveToLocalStorage } from "../utils/localStorage";
 
-interface ILoginPage {
-  handleLogin: ({}) => void;
+interface IUserLogin {
+  username: string;
+  password: string;
+  role: string;
 }
 
-const LoginPage = ({ handleLogin }: ILoginPage) => {
+const LoginPage = () => {
+  const { setLoggedInUser } = useContext(AuthContext);
   const [loginUserName, setLoginUserName] = useState("");
   const [loginUserPassword, setLoginUserPassword] = useState("");
 
   const handleLoginFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (!loginUserName || !loginUserPassword) return;
+    try {
+      setLoginUserName("");
+      setLoginUserPassword("");
 
-    setLoginUserName("");
-    setLoginUserPassword("");
-
-    const user = JSON.stringify({
-      username: loginUserName,
-      password: loginUserPassword,
-    });
-    console.log(await invoke("login_command", { user }));
+      const user = JSON.stringify({
+        username: loginUserName,
+        password: loginUserPassword,
+      });
+      const loggedInUser: IUserLogin = JSON.parse(
+        await invoke("login_command", { user })
+      );
+      setLoggedInUser(loggedInUser);
+      saveToLocalStorage(loggedInUser);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

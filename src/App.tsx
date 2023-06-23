@@ -8,17 +8,8 @@ import { invoke } from "@tauri-apps/api";
 
 function App() {
   useEffect(() => {
-    const data = {
-      username: "free",
-      password: "1234",
-      role: "admin",
-    };
-    const user = JSON.stringify(data);
     const createTables = async () => {
       await invoke("create_tables_command");
-      // await invoke("create_users_command", { user });
-      // const view: any = await invoke("get_all_users_command");
-      // console.log(JSON.parse(view));
     };
     createTables();
   }, []);

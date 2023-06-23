@@ -1,6 +1,17 @@
+import { useEffect } from "react";
+import { invoke } from "@tauri-apps/api";
 import { AiOutlinePlus } from "react-icons/ai";
 
 const AddUser = () => {
+  useEffect(() => {
+    const getAllUser = async () => {
+      const alluser: any = await invoke("get_all_users_command");
+      console.log(JSON.parse(alluser));
+      console.log(await invoke("get_all_users_command"));
+      console.log(alluser);
+    };
+    getAllUser();
+  }, []);
   return (
     <section className="w-full">
       <div className="flex items-center justify-between p-5">

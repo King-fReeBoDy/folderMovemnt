@@ -25,6 +25,7 @@ struct Authenticatelogin {
     password:String
 }
 
+
 fn create_tables() -> Result<()> {
     let conn = Connection::open("foldermanagement.db")?;
 
@@ -79,7 +80,7 @@ fn get_all_users() -> Result<String, rusqlite::Error> {
             Ok(User {
                 id: row.get(0)?,
                 username: row.get(1)?,
-                password: row.get(2)?,
+                password:row.get(2)?,
                 role: row.get(3)?,
             })
         })?
@@ -93,8 +94,8 @@ fn get_all_users() -> Result<String, rusqlite::Error> {
 fn login (user:Authenticatelogin) ->Result<String> {
     let conn = Connection::open("foldermanagement.db")?;
 
-    let mut stmt = conn.prepare("SELECT * FROM users WHERE username = ?1")?;
-    let user = stmt.query_row([&user.username], |row| {
+    let mut stmt = conn.prepare("SELECT * FROM users WHERE username = ?1 AND password = ?2")?;
+    let user = stmt.query_row([&user.username, &user.password], |row| {
         Ok(Newuser {
             username: row.get(1)?,
             password: row.get(2)?,
@@ -125,10 +126,10 @@ fn create_users_command (user:String) -> Result<(), String> {
 }
 
 #[tauri::command]
-fn get_all_users_command () -> Result<String,String> {
+fn get_all_users_command () -> Result<serde_json::Value,String> {
       match get_all_users() {
-        Ok(user) => Ok(user),
-        Err(err) => Err(format!("Failed to get user: {:?}", err)),
+        Ok(json_data) => Ok(json_data),
+        Err(err) => Err(err.to_string()),
     }
 }
 

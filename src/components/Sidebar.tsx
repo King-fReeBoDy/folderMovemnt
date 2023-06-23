@@ -5,6 +5,7 @@ import { BiSearch } from "react-icons/bi";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { clearLocalStorage } from "../utils/localStorage";
 
 interface IFunctions {
   handleSidebarToggle: () => void;
@@ -12,6 +13,10 @@ interface IFunctions {
 }
 
 const Sidebar = ({ handleSidebarToggle, toggleSidebar }: IFunctions) => {
+  const handleLogout = () => {
+    clearLocalStorage();
+    window.location.reload();
+  };
   const [toggleTheme, setToggleTheme] = useState(false);
   return (
     <div className="bg-neutral-100 flex flex-col justify-between p-5 h-screen">
@@ -65,7 +70,10 @@ const Sidebar = ({ handleSidebarToggle, toggleSidebar }: IFunctions) => {
             </p>
           </button>
         </Link>
-        <button className="flex items-center my-2 hover:bg-neutral-300 rounded-full p-3">
+        <button
+          onClick={handleLogout}
+          className="flex items-center my-2 hover:bg-neutral-300 rounded-full p-3"
+        >
           <RiLogoutBoxRLine className="text-2xl" />
           <p className={`ml-2 ${toggleSidebar ? "block" : "hidden"}`}>Logout</p>
         </button>
