@@ -2,13 +2,8 @@ import { useState } from "react";
 import data from "../data";
 import { CiEdit, CiTrash } from "react-icons/ci";
 import { AiOutlineTable } from "react-icons/ai";
-import { BiSearch } from "react-icons/bi";
 
 const Search = () => {
-  const [border, setBorder] = useState<number>();
-  const handleBorder = (idx: number) => {
-    setBorder(idx);
-  };
   return (
     <section className="w-full">
       <div className="flex items-center justify-between p-5">
@@ -74,12 +69,9 @@ const Search = () => {
                 return (
                   <tr
                     key={idx}
-                    className={`${
-                      border === idx
-                        ? "border-4 border-blue-200 rounded-full"
-                        : ""
-                    } hover:bg-gray-100  `}
-                    onClick={() => handleBorder(idx)}
+                    className="                      
+                     border-4 border-blue-200 rounded-full
+                     hover:bg-gray-100"
                   >
                     <td className="text-center border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
                       {data.OPDNumber}
@@ -123,18 +115,16 @@ const Search = () => {
         )}
       </main>
 
-      {border !== undefined && border >= 0 && (
-        <div className="flex items-center my-5 px-5">
-          <button className="flex items-center bg-blue-600 px-5 py-2 text-white border-2 border-blue-600 rounded-lg shadow-lg">
-            <CiEdit />
-            <p className="ml-2">Edit</p>
-          </button>
-          <button className="flex items-center ml-4 border-2 border-red-500 text-red-500 px-5 py-2 rounded-lg shadow-lg">
-            <CiTrash />
-            <p className="ml-2">Delete</p>
-          </button>
-        </div>
-      )}
+      <div className="flex items-center my-5 px-5">
+        <button className="flex items-center bg-blue-600 px-5 py-2 text-white border-2 border-blue-600 rounded-lg shadow-lg">
+          <CiEdit />
+          <p className="ml-2">Edit</p>
+        </button>
+        <button className="flex items-center ml-4 border-2 border-red-500 text-red-500 px-5 py-2 rounded-lg shadow-lg">
+          <CiTrash />
+          <p className="ml-2">Delete</p>
+        </button>
+      </div>
     </section>
   );
 };

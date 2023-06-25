@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { AiOutlineTable, AiOutlinePlus } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { CiTrash, CiEdit } from "react-icons/ci";
 import data from "../data";
 import { Link } from "react-router-dom";
+import { invoke } from "@tauri-apps/api";
+import { DataContext } from "../context/DataContext";
 
 interface IBody {
   handleAddPatientModal: () => void;
@@ -16,17 +18,22 @@ const Body = ({
   handleEditPatientModal,
   handleDeletePatientModal,
 }: IBody) => {
+  const { records, getAllRecords, setEditId, setDeleteId } =
+    useContext(DataContext);
+  useEffect(() => {
+    getAllRecords();
+  }, []);
   const [border, setBorder] = useState<number>();
 
-  const handleBorder = (idx: number) => {
-    setBorder(idx);
+  const handleId = (id: number) => {
+    setBorder(id);
+    setEditId(id);
+    setDeleteId(id);
   };
   return (
     <section className="w-full">
       <div className="flex items-center justify-between p-5">
-        <h1 className="text-4xl font-bold my-5 text-black">
-          📁 Folder Movement
-        </h1>
+        <h1 className="text-4xl font-bold my-5 text-black">📁 All Records</h1>
         <button
           className="flex items-center bg-blue-600 text-white px-3 py-2 shadow-md rounded-lg"
           onClick={handleAddPatientModal}
@@ -57,84 +64,82 @@ const Body = ({
 
       <main className="overflow-y-auto h-[400px] px-5">
         <table className="text-xs w-full">
-          <thead className="">
+          <thead className="sticky top-0  backdrop-blur-lg inset-x-0">
             <tr className="">
-              <th className="border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
+              <th className="border-r-2  px-5 py-3 whitespace-nowrap">
                 Date Of Issue
               </th>
-              <th className="border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
+              <th className="border-r-2  px-5 py-3 whitespace-nowrap">
                 OPD Number
               </th>
-              <th className="border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
+              <th className="border-r-2 px-5 py-3 whitespace-nowrap">
                 Name Of Patient
               </th>
-              <th className="border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
+              <th className="border-r-2 px-5 py-3 whitespace-nowrap">
                 Source Of Request
               </th>
-              <th className="border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
+              <th className="border-r-2 px-5 py-3 whitespace-nowrap">
                 Prescriber Name
               </th>
-              <th className="border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
+              <th className="border-r-2 px-5 py-3 whitespace-nowrap">
                 Purpose
               </th>
-              <th className="border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
+              <th className="border-r-2 px-5 py-3 whitespace-nowrap">
                 Folder Taken By
               </th>
-              <th className="border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
+              <th className="border-r-2 px-5 py-3 whitespace-nowrap">
                 Folder Issued By
               </th>
 
-              <th className="border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
+              <th className="border-r-2 px-5 py-3 whitespace-nowrap">
                 Folder Received By
               </th>
-              <th className="border-b-2 px-5 py-3 whitespace-nowrap">
-                Date of Receiving
-              </th>
+              <th className="px-5 py-3 whitespace-nowrap">Date of Receiving</th>
             </tr>
           </thead>
 
           <tbody className="">
-            {data.length !== 0 &&
-              data.map((data, idx) => {
+            {records.length !== 0 &&
+              records.map((record, idx) => {
                 return (
                   <tr
-                    key={idx}
+                    key={record.id}
                     className={`${
-                      border === idx
+                      border === record.id
                         ? "border-4 border-blue-200 rounded-full"
                         : ""
                     } hover:bg-gray-100  `}
-                    onClick={() => handleBorder(idx)}
+                    onClick={() => handleId(record.id)}
                   >
-                    <td className="text-center border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
-                      {data.OPDNumber}
+                    <td className="text-center border-r-2 border-b-2 px-5 py-3 whitespace-nowrap ">
+                      {record.dateofissue}
                     </td>
                     <td className="text-center border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
-                      {data.NameOfPatient}
+                      {record.opdnumber}
                     </td>
                     <td className="text-center border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
-                      {data.SourceOfRequest}
+                      {record.nameofpatient}
                     </td>
                     <td className="text-center border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
-                      {data.PrescriberName}
+                      {record.sourceofrequest}
+                    </td>
+                    <td className="text-center border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
+                      {record.requestingofficer}
                     </td>
                     <td className="text-center border-r-2 border-b-2 px-5 py-3 whitespace-nowrap ">
-                      {data.Purpose}
+                      {record.purpose}
                     </td>
                     <td className="text-center border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
-                      {data.FolderTakenBy}
+                      {record.foldertakenby}
                     </td>
                     <td className="text-center border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
-                      {data.FolderIssuedBy}
-                    </td>
-                    <td className="text-center border-r-2 border-b-2 px-5 py-3 whitespace-nowrap ">
-                      {data.DateOfIssue}
+                      {record.folderissuedby}
                     </td>
                     <td className="text-center border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
-                      {data.FolderReceivedBy}
+                      {record.folderreceivedby}
                     </td>
-                    <td className="text-center border-b-2 whitespace-nowrap py-3 border-r-2">
-                      {data.DateOfReceiving}
+                    <td className="text-center border-b-2 whitespace-nowrap py-3">
+                      {record.dateofreceiving}
                     </td>
                   </tr>
                 );

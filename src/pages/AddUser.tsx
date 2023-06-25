@@ -1,16 +1,26 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api";
 import { AiOutlinePlus } from "react-icons/ai";
 
+interface IAccounts {
+  id: number;
+  username: string;
+  password: string;
+  role: string;
+}
+
 const AddUser = () => {
+  const [accounts, setAccounts] = useState<IAccounts[]>([]);
   useEffect(() => {
-    const getAllUser = async () => {
-      const alluser: any = await invoke("get_all_users_command");
-      console.log(JSON.parse(alluser));
-      console.log(await invoke("get_all_users_command"));
-      console.log(alluser);
+    const getAllUsers = async () => {
+      try {
+        setAccounts(JSON.parse(await invoke("get_all_users_command")));
+      } catch (error) {
+        console.error("Failed to get users:", error);
+      }
     };
-    getAllUser();
+
+    getAllUsers();
   }, []);
   return (
     <section className="w-full">
@@ -41,17 +51,21 @@ const AddUser = () => {
           </thead>
 
           <tbody>
-            <tr>
-              <td className="text-center border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
-                Desmond Kudjuh
-              </td>
-              <td className="text-center border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
-                *************
-              </td>
-              <td className="text-center  border-b-2 px-5 py-3 whitespace-nowrap">
-                Admin
-              </td>
-            </tr>
+            {accounts.map((account) => {
+              return (
+                <tr key={account.id}>
+                  <td className="text-center border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
+                    {account.username}
+                  </td>
+                  <td className="text-center border-r-2 border-b-2 px-5 py-3 whitespace-nowrap">
+                    {account.password}
+                  </td>
+                  <td className="text-center  border-b-2 px-5 py-3 whitespace-nowrap">
+                    {account.role}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </main>

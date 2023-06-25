@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Body from "../components/Body";
 import AddRecord from "../components/AddRecord";
 import EditRecord from "../components/EditRecord";
 import DeleteRecord from "../components/DeleteRecord";
+import { DataContext } from "../context/DataContext";
 
 const Home = () => {
   const [addPatientModal, setAddPatientModal] = useState(false);

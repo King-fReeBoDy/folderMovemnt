@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 const Header = () => {
   const { loggedInUser } = useContext(AuthContext);
   return (
-    <nav className="sticky top-0 left-0 right-0 flex justify-between items-center border-b-2 pb-3 bg-white p-5">
+    <nav className="sticky top-0 left-0 right-0 flex justify-between items-center border-b-2 pb-3 bg-white p-5 capitalize">
       <h5 className="text-sm">Ho Municipal Hospital</h5>
       <div className="flex items-center">
         <p className="text-sm">{loggedInUser?.username}</p>

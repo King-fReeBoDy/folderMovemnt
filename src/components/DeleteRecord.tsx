@@ -1,8 +1,24 @@
+import { useContext, useEffect } from "react";
+import { DataContext } from "../context/DataContext";
+import { invoke } from "@tauri-apps/api";
+
 interface IDeleteRecord {
   handleDeletePatientModal: () => void;
 }
 
 const DeleteRecord = ({ handleDeletePatientModal }: IDeleteRecord) => {
+  const { deleteId, getAllRecords } = useContext(DataContext);
+
+  const deleteRecordById = async () => {
+    try {
+      const id = JSON.stringify(deleteId);
+      await invoke("delete_record_by_id_command", { id });
+      getAllRecords();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <section className="relative">
       <div className="fixed top-0 left-0 w-full h-full bg-black/90 z-10"></div>
@@ -18,14 +34,17 @@ const DeleteRecord = ({ handleDeletePatientModal }: IDeleteRecord) => {
             <span className="text-blue-600 font-bold">G005982/22</span>
           </p>
           <div className="flex justify-between items-center my-5">
-            <button className=" bg-red-600 px-5 py-2 text-white border-2 border-red-600 rounded-lg shadow-lg">
-              <p className="ml-2">Delete Patient Record</p>
+            <button
+              onClick={deleteRecordById}
+              className=" bg-red-600 px-5 py-2 text-white border-2 border-red-600 rounded-lg shadow-lg"
+            >
+              <p className="">Delete Patient Record</p>
             </button>
             <button
               onClick={handleDeletePatientModal}
-              className=" ml-4 border-2 bg-gray-500 border-gray-500 text-white px-5 py-2 rounded-lg shadow-lg"
+              className="border-2 bg-gray-500 border-gray-500 text-white px-5 py-2 rounded-lg shadow-lg"
             >
-              <p className="ml-2">Cancel</p>
+              <p className="">Cancel</p>
             </button>
           </div>
         </div>

@@ -5,7 +5,7 @@ import { BsPerson } from "react-icons/bs";
 import { RiLock2Line } from "react-icons/ri";
 import { AuthContext } from "../context/AuthContext";
 import { saveToLocalStorage } from "../utils/localStorage";
-
+import { toast } from "react-toastify";
 interface IUserLogin {
   username: string;
   password: string;
@@ -19,7 +19,10 @@ const LoginPage = () => {
 
   const handleLoginFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    if (!loginUserName || !loginUserPassword) return;
+    if (!loginUserName || !loginUserPassword) {
+      toast.error("Input all fields");
+      return;
+    }
     try {
       setLoginUserName("");
       setLoginUserPassword("");
@@ -28,13 +31,16 @@ const LoginPage = () => {
         username: loginUserName,
         password: loginUserPassword,
       });
+
       const loggedInUser: IUserLogin = JSON.parse(
         await invoke("login_command", { user })
       );
       setLoggedInUser(loggedInUser);
       saveToLocalStorage(loggedInUser);
+      toast.success("Login successfully");
     } catch (error) {
       console.log(error);
+      toast.error("Wrong credentials");
     }
   };
 

@@ -4,13 +4,16 @@ import App from "./App";
 import "./styles.css";
 import { BrowserRouter } from "react-router-dom";
 import AuthContextAPI from "./context/AuthContext";
+import DataContextAPI from "./context/DataContext";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthContextAPI>
-        <App />
-      </AuthContextAPI>
+      <DataContextAPI>
+        <AuthContextAPI>
+          <App />
+        </AuthContextAPI>
+      </DataContextAPI>
     </BrowserRouter>
   </React.StrictMode>
 );
