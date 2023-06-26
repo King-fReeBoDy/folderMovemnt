@@ -179,6 +179,40 @@ fn delete_record_by_id(id: i32) -> Result<()> {
     Ok(())
 }
 
+fn update_record_by_id(record: Newrecord) -> Result<()> {
+    let conn = Connection::open("foldermanagement.db")?;
+
+    conn.execute(
+        "UPDATE records SET
+            nameofpatient = ?,
+            opdnumber = ?,
+            sourceofrequest = ?,
+            requestingofficer = ?,
+            purpose = ?,
+            foldertakenby = ?,
+            folderissuedby = ?,
+            dateofissue = ?,
+            folderreceivedby = ?,
+            dateofreceiving = ?
+        WHERE id = ?",
+        &[
+            &record.nameofpatient,
+            &record.opdnumber,
+            &record.sourceofrequest,
+            &record.requestingofficer,
+            &record.purpose,
+            &record.foldertakenby,
+            &record.folderissuedby,
+            &record.dateofissue,
+            &record.folderreceivedby,
+            &record.dateofreceiving,
+            &record.id.to_string()
+        ],
+    )?;
+
+    Ok(())
+}
+
 fn login (user:Authenticatelogin) ->Result<String> {
     let conn = Connection::open("foldermanagement.db")?;
 
@@ -290,10 +324,21 @@ fn delete_record_by_id_command (id:String) -> Result<(), String> {
     }
 }
 
+#[tauri::command]
+fn update_record_by_id_command (record:String) -> Result<(), String> {
+    let update_record_id: Newrecord = serde_json::from_str(&record).unwrap();
+     match update_record_by_id(update_record_id) {
+        Ok(()) => Ok(()),
+        Err(err) => Err(format!("Failed to get user: {:?}", err)),
+    }
+
+}
+
+
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![create_tables_command,create_users_command,get_all_users_command,login_command,create_records_command,get_all_records_command,get_record_by_id_command,delete_record_by_id_command])
+        .invoke_handler(tauri::generate_handler![create_tables_command,create_users_command,get_all_users_command,login_command,create_records_command,get_all_records_command,get_record_by_id_command,delete_record_by_id_command,update_record_by_id_command])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

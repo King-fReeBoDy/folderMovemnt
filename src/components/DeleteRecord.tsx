@@ -1,6 +1,8 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../context/DataContext";
 import { invoke } from "@tauri-apps/api";
+import { Newrecord } from "../context/DataContext";
+import { toast } from "react-toastify";
 
 interface IDeleteRecord {
   handleDeletePatientModal: () => void;
@@ -8,14 +10,33 @@ interface IDeleteRecord {
 
 const DeleteRecord = ({ handleDeletePatientModal }: IDeleteRecord) => {
   const { deleteId, getAllRecords } = useContext(DataContext);
+  const [deleteRecord, setDeleteRecord] = useState<Newrecord | undefined>();
+
+  useEffect(() => {
+    const getRecordById = async () => {
+      try {
+        const id = JSON.stringify(deleteId);
+        const results: Newrecord = JSON.parse(
+          await invoke("get_record_by_id_command", { id })
+        );
+        setDeleteRecord(results);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getRecordById();
+  }, []);
 
   const deleteRecordById = async () => {
     try {
       const id = JSON.stringify(deleteId);
       await invoke("delete_record_by_id_command", { id });
       getAllRecords();
+      handleDeletePatientModal();
+      toast.success(`${deleteRecord?.opdnumber} was deleted succesfully`);
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong");
     }
   };
 
@@ -31,7 +52,9 @@ const DeleteRecord = ({ handleDeletePatientModal }: IDeleteRecord) => {
           <p className="text-center">
             Are you sure you want to delete this record, <br />
             with the OPD Number :{" "}
-            <span className="text-blue-600 font-bold">G005982/22</span>
+            <span className="text-blue-600 font-bold">
+              {deleteRecord?.opdnumber}
+            </span>
           </p>
           <div className="flex justify-between items-center my-5">
             <button

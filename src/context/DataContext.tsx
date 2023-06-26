@@ -16,7 +16,7 @@ interface Props {
   children: ReactNode;
 }
 
-interface Newrecord {
+export interface Newrecord {
   id: number;
   nameofpatient: string;
   opdnumber: string;

@@ -207,7 +207,7 @@ const AddRecord = ({ handleAddPatientModal }: IAddRecord) => {
               </label>
               <input
                 type="text"
-                name="FolderReceivedBy"
+                name="FolderIssuedBy"
                 value={addNewRecord.FolderIssuedBy}
                 disabled
                 className="p-2 border-2 rounded-lg uppercase w-full"

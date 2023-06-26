@@ -6,6 +6,7 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { clearLocalStorage } from "../utils/localStorage";
+import ReactSwitch from "react-switch";
 
 interface IFunctions {
   handleSidebarToggle: () => void;
@@ -58,6 +59,7 @@ const Sidebar = ({ handleSidebarToggle, toggleSidebar }: IFunctions) => {
               className="rounded-full h-3 w-3 bg-neutral-600 p-2"
             ></motion.p>
           </button>
+
           <p className={`ml-2 ${toggleSidebar ? "block" : "hidden"}`}>
             {toggleTheme ? "Dark Mode" : "Light Mode"}
           </p>

@@ -1,31 +1,73 @@
 import { invoke } from "@tauri-apps/api";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState, ChangeEvent, FormEvent } from "react";
 import { DataContext } from "../context/DataContext";
+import { Newrecord } from "../context/DataContext";
+import { toast } from "react-toastify";
 
 export interface IEditModal {
   handleEditPatientModal: () => void;
 }
 
 const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
-  const { editId } = useContext(DataContext);
+  const { editId, getAllRecords } = useContext(DataContext);
+  const [editRecord, setEditRecord] = useState<Newrecord | null>(null);
+
   useEffect(() => {
     const getRecordById = async () => {
       try {
         const id = JSON.stringify(editId);
-        const results = await invoke("get_record_by_id_command", { id });
+        const results: Newrecord = JSON.parse(
+          await invoke("get_record_by_id_command", { id })
+        );
         console.log(results);
+        setEditRecord(results);
       } catch (error) {
         console.log(error);
       }
     };
     getRecordById();
   }, []);
+
+  const handleEditChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = event.target;
+
+    setEditRecord((prev) => {
+      if (prev === null) {
+        return null;
+      }
+
+      return {
+        ...prev,
+        [name]: value.toUpperCase(),
+      };
+    });
+  };
+
+  const handleEditSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    try {
+      const record = JSON.stringify(editRecord);
+      await invoke("update_record_by_id_command", { record });
+      setEditRecord(null);
+      handleEditPatientModal();
+      getAllRecords();
+      toast.success("Record edited successfully");
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error);
+    }
+  };
   return (
     <section className="relative">
-      <div className="fixed top-0 left-0 w-full h-full bg-black/90 z-10"></div>
+      <div
+        className="fixed top-0 left-0 w-full h-full bg-black/90 z-10"
+        onClick={handleEditPatientModal}
+      ></div>
 
       <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex item-center justify-center z-20 bg-white p-5 rounded-lg">
-        <form>
+        <form onSubmit={handleEditSubmit}>
           <h2 className="text-2xl text-black font-bold text-center mb-5">
             Edit Record
           </h2>
@@ -36,7 +78,9 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
               </label>
               <input
                 type="date"
-                name="DateOfIssue"
+                name="dateofissue"
+                value={editRecord?.dateofissue}
+                onChange={handleEditChange}
                 className="p-2 border-2 rounded-lg w-full"
               />
             </div>
@@ -46,8 +90,10 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
               </label>
               <input
                 type="text"
-                name="OPDNumber"
+                name="opdnumber"
+                value={editRecord?.opdnumber}
                 maxLength={10}
+                onChange={handleEditChange}
                 className="p-2 border-2 rounded-lg uppercase"
               />
             </div>
@@ -60,7 +106,9 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
               </label>
               <input
                 type="text"
-                name="NameOfPatient"
+                name="nameofpatient"
+                value={editRecord?.nameofpatient}
+                onChange={handleEditChange}
                 className="p-2 border-2 rounded-lg uppercase"
               />
             </div>
@@ -71,7 +119,9 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
               </label>
               <input
                 type="text"
-                name="RequestingOfficer"
+                name="requestingofficer"
+                value={editRecord?.requestingofficer}
+                onChange={handleEditChange}
                 className="p-2 border-2 rounded-lg uppercase"
               />
             </div>
@@ -83,7 +133,9 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
                 Source Of Request
               </label>
               <select
-                name="SourceOfRequest"
+                name="sourceofrequest"
+                value={editRecord?.sourceofrequest}
+                onChange={handleEditChange}
                 className="p-2 border-2 rounded-lg uppercase"
               >
                 <option value=""> --Choose Sourse of request--</option>
@@ -99,7 +151,9 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
                 Purpose
               </label>
               <select
-                name="Purpose"
+                name="purpose"
+                value={editRecord?.purpose}
+                onChange={handleEditChange}
                 className="p-2 border-2 rounded-lg uppercase"
               >
                 <option value=""> -- Choose Purpose --</option>
@@ -117,7 +171,9 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
               </label>
               <input
                 type="text"
-                name="FolderTakenBy"
+                name="foldertakenby"
+                value={editRecord?.foldertakenby}
+                onChange={handleEditChange}
                 className="p-2 border-2 rounded-lg w-full uppercase"
               />
             </div>
@@ -127,7 +183,9 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
               </label>
               <input
                 type="text"
-                name="FolderReceivedBy"
+                name="folderissuedby"
+                value={editRecord?.folderissuedby}
+                onChange={handleEditChange}
                 disabled
                 className="p-2 border-2 rounded-lg uppercase w-full"
               />
@@ -141,7 +199,9 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
               </label>
               <input
                 type="text"
-                name="FolderReceivedBy"
+                name="folderreceivedby"
+                value={editRecord?.folderreceivedby}
+                onChange={handleEditChange}
                 className="p-2 border-2 rounded-lg uppercase"
               />
             </div>
@@ -151,7 +211,9 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
               </label>
               <input
                 type="date"
-                name="DateOfReceiving"
+                name="dateofreceiving"
+                value={editRecord?.dateofreceiving}
+                onChange={handleEditChange}
                 className="p-2 border-2 rounded-lg"
               />
             </div>
@@ -162,8 +224,8 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
               <p className="">Save Record</p>
             </button>
             <button
+              className=" ml-4 border-2 bg-gray-500 border-gray-500 text-white px-5 py-2 rounded-lg shadow-lg"
               onClick={handleEditPatientModal}
-              className="ml-4 border-2 bg-gray-500 border-gray-500 text-white px-5 py-2 rounded-lg shadow-lg"
             >
               <p className="">Cancel</p>
             </button>

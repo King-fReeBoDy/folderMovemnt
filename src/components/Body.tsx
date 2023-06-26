@@ -146,7 +146,7 @@ const Body = ({
               })}
           </tbody>
         </table>
-        {data.length === 0 && (
+        {records.length === 0 && (
           <div className="flex justify-center text-4xl font-bold w-full p-5">
             <p className="text-center">No Results</p>
           </div>

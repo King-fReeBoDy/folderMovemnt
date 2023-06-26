@@ -13,6 +13,12 @@ function App() {
     const createTables = async () => {
       try {
         await invoke("create_tables_command");
+        const user = JSON.stringify({
+          username: "admin",
+          password: "1234",
+          role: "admin",
+        });
+        await invoke("create_users_command", { user });
       } catch (error) {
         console.log(error);
       }
