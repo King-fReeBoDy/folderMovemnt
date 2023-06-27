@@ -66,27 +66,27 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
         onClick={handleEditPatientModal}
       ></div>
 
-      <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex item-center justify-center z-20 bg-white p-5 rounded-lg">
+      <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex item-center justify-center z-20 bg-white p-5 rounded-lg dark:bg-gray-900">
         <form onSubmit={handleEditSubmit}>
-          <h2 className="text-2xl text-black font-bold text-center mb-5">
+          <h2 className="text-2xl text-black font-bold text-center mb-5 dark:text-gray-300">
             Edit Record
           </h2>
           <section className="grid grid-cols-2 gap-3">
             <div className="grid mb-5">
               <label htmlFor="" className="text-xs">
-                Date Of Issue
+                Date Of Issue <span className="text-red-500 font-bold">*</span>
               </label>
               <input
                 type="date"
                 name="dateofissue"
                 value={editRecord?.dateofissue}
                 onChange={handleEditChange}
-                className="p-2 border-2 rounded-lg w-full"
+                className="p-2 border-2 rounded-lg w-full dark:bg-gray-700 dark:border-gray-700"
               />
             </div>
             <div className="grid mb-5">
               <label htmlFor="" className="text-xs">
-                OPD Number
+                OPD Number <span className="text-red-500 font-bold">*</span>
               </label>
               <input
                 type="text"
@@ -94,7 +94,7 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
                 value={editRecord?.opdnumber}
                 maxLength={10}
                 onChange={handleEditChange}
-                className="p-2 border-2 rounded-lg uppercase"
+                className="p-2 border-2 rounded-lg uppercase dark:bg-gray-700 dark:border-gray-700"
               />
             </div>
           </section>
@@ -102,27 +102,29 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
           <section className="grid grid-cols-2 gap-3">
             <div className="grid mb-5">
               <label htmlFor="" className="text-xs">
-                Name Of Patient
+                Name Of Patient{" "}
+                <span className="text-red-500 font-bold">*</span>
               </label>
               <input
                 type="text"
                 name="nameofpatient"
                 value={editRecord?.nameofpatient}
                 onChange={handleEditChange}
-                className="p-2 border-2 rounded-lg uppercase"
+                className="p-2 border-2 rounded-lg uppercase dark:bg-gray-700 dark:border-gray-700"
               />
             </div>
 
             <div className="grid mb-5">
               <label htmlFor="" className="text-xs">
-                Requesting Officer
+                Requesting Officer{" "}
+                <span className="text-red-500 font-bold">*</span>
               </label>
               <input
                 type="text"
                 name="requestingofficer"
                 value={editRecord?.requestingofficer}
                 onChange={handleEditChange}
-                className="p-2 border-2 rounded-lg uppercase"
+                className="p-2 border-2 rounded-lg uppercase dark:bg-gray-700 dark:border-gray-700"
               />
             </div>
           </section>
@@ -130,13 +132,14 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
           <div className="grid grid-cols-2 gap-5">
             <div className="grid mb-5">
               <label htmlFor="" className="text-xs">
-                Source Of Request
+                Source Of Request{" "}
+                <span className="text-red-500 font-bold">*</span>
               </label>
               <select
                 name="sourceofrequest"
                 value={editRecord?.sourceofrequest}
                 onChange={handleEditChange}
-                className="p-2 border-2 rounded-lg uppercase"
+                className="p-2 border-2 rounded-lg uppercase dark:bg-gray-700 dark:border-gray-700"
               >
                 <option value=""> --Choose Sourse of request--</option>
                 <option value="WARD">Ward</option>
@@ -148,13 +151,13 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
 
             <div className="grid mb-5">
               <label htmlFor="" className="text-xs">
-                Purpose
+                Purpose <span className="text-red-500 font-bold">*</span>
               </label>
               <select
                 name="purpose"
                 value={editRecord?.purpose}
                 onChange={handleEditChange}
-                className="p-2 border-2 rounded-lg uppercase"
+                className="p-2 border-2 rounded-lg uppercase dark:bg-gray-700 dark:border-gray-700"
               >
                 <option value=""> -- Choose Purpose --</option>
                 <option value="ADMISSION">Admission</option>
@@ -167,14 +170,15 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
           <section className="grid grid-cols-2 w-full">
             <div className="grid mb-5">
               <label htmlFor="" className="text-xs">
-                Folder Taken By
+                Folder Taken By{" "}
+                <span className="text-red-500 font-bold">*</span>
               </label>
               <input
                 type="text"
                 name="foldertakenby"
                 value={editRecord?.foldertakenby}
                 onChange={handleEditChange}
-                className="p-2 border-2 rounded-lg w-full uppercase"
+                className="p-2 border-2 rounded-lg w-full uppercase dark:bg-gray-700 dark:border-gray-700"
               />
             </div>
             <div className="grid mb-5 ml-3">
@@ -187,7 +191,7 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
                 value={editRecord?.folderissuedby}
                 onChange={handleEditChange}
                 disabled
-                className="p-2 border-2 rounded-lg uppercase w-full"
+                className="p-2 border-2 rounded-lg uppercase w-full dark:bg-gray-700 dark:border-gray-700"
               />
             </div>
           </section>
@@ -195,14 +199,15 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
           <section className="grid grid-cols-2 gap-3">
             <div className="grid mb-5">
               <label htmlFor="" className="text-xs">
-                Folder Received By
+                Folder Received By{" "}
+                <span className="text-red-500 font-bold">*</span>
               </label>
               <input
                 type="text"
                 name="folderreceivedby"
                 value={editRecord?.folderreceivedby}
                 onChange={handleEditChange}
-                className="p-2 border-2 rounded-lg uppercase"
+                className="p-2 border-2 rounded-lg uppercase dark:bg-gray-700 dark:border-gray-700"
               />
             </div>
             <div className="grid mb-5">
@@ -214,17 +219,17 @@ const EditRecord = ({ handleEditPatientModal }: IEditModal) => {
                 name="dateofreceiving"
                 value={editRecord?.dateofreceiving}
                 onChange={handleEditChange}
-                className="p-2 border-2 rounded-lg"
+                className="p-2 border-2 rounded-lg dark:bg-gray-700 dark:border-gray-700"
               />
             </div>
           </section>
 
           <div className="flex items-center my-5">
-            <button className=" bg-blue-600 px-5 py-2 text-white border-2 border-blue-600 rounded-lg shadow-lg">
+            <button className=" bg-blue-600 px-5 py-2 text-white border-2 border-blue-600 rounded-lg shadow-lg dark:bg-blue-700 dark:border-blue-700">
               <p className="">Save Record</p>
             </button>
             <button
-              className=" ml-4 border-2 bg-gray-500 border-gray-500 text-white px-5 py-2 rounded-lg shadow-lg"
+              className=" ml-4 border-2 bg-gray-500 border-gray-500 text-white px-5 py-2 rounded-lg shadow-lg dark:bg-gray-700 dark:border-gray-700"
               onClick={handleEditPatientModal}
             >
               <p className="">Cancel</p>

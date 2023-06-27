@@ -81,7 +81,7 @@ fn create_tables() -> Result<()> {
             folderissuedby TEXT NOT NULL,
             dateofissue TEXT NOT NULL,
             folderreceivedby TEXT NOT NULL,
-            dateofreceiving TEXT NOT NULL
+            dateofreceiving TEXT 
         )",
         [],
     )?;

@@ -4,18 +4,18 @@ interface IUserData {
   role: string;
 }
 
-export const getFromLocalStorage = (): IUserData | null => {
-  const getUser = localStorage.getItem("user");
+export const getFromSessionStorage = (): IUserData | null => {
+  const getUser = sessionStorage.getItem("user");
   if (getUser) {
     return JSON.parse(getUser);
   }
   return null;
 };
 
-export const saveToLocalStorage = (userData: IUserData) => {
-  localStorage.setItem("user", JSON.stringify(userData));
+export const saveToSessionStorage = (userData: IUserData) => {
+  sessionStorage.setItem("user", JSON.stringify(userData));
 };
 
-export const clearLocalStorage = () => {
-  localStorage.removeItem("user");
+export const clearSessionStorage = () => {
+  sessionStorage.removeItem("user");
 };

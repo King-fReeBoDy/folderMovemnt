@@ -44,9 +44,9 @@ const DeleteRecord = ({ handleDeletePatientModal }: IDeleteRecord) => {
     <section className="relative">
       <div className="fixed top-0 left-0 w-full h-full bg-black/90 z-10"></div>
 
-      <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex item-center justify-center z-20 bg-white p-5 rounded-lg">
+      <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex item-center justify-center z-20 bg-white p-5 rounded-lg dark:bg-gray-900">
         <div>
-          <h2 className="text-2xl text-black font-bold text-center mb-5">
+          <h2 className="text-2xl text-black font-bold text-center mb-5 dark:text-gray-300">
             Delete Record
           </h2>
           <p className="text-center">
@@ -59,13 +59,13 @@ const DeleteRecord = ({ handleDeletePatientModal }: IDeleteRecord) => {
           <div className="flex justify-between items-center my-5">
             <button
               onClick={deleteRecordById}
-              className=" bg-red-600 px-5 py-2 text-white border-2 border-red-600 rounded-lg shadow-lg"
+              className=" bg-red-600 px-5 py-2 text-white border-2 border-red-600 rounded-lg shadow-lg dark:bg-red-700 dark:border-red-700"
             >
               <p className="">Delete Patient Record</p>
             </button>
             <button
               onClick={handleDeletePatientModal}
-              className="border-2 bg-gray-500 border-gray-500 text-white px-5 py-2 rounded-lg shadow-lg"
+              className="border-2 bg-gray-500 border-gray-500 text-white px-5 py-2 rounded-lg shadow-lg dark:bg-gray-700 dark:border-gray-700"
             >
               <p className="">Cancel</p>
             </button>

@@ -5,8 +5,12 @@ import Header from "./Header";
 import LoginPage from "../pages/LoginPage";
 import { AuthContext } from "../context/AuthContext";
 
-const SharedLayout = () => {
-  // const [loginUser, setLoginUser] = useState<undefined | {}>();
+interface IShareLayout {
+  theme: string;
+  setTheme: (theme: string) => void;
+}
+
+const SharedLayout = ({ theme, setTheme }: IShareLayout) => {
   const { loggedInUser } = useContext(AuthContext);
   const [toggleSidebar, setToggleSidebar] = useState(false);
 
@@ -17,11 +21,13 @@ const SharedLayout = () => {
   return (
     <>
       {loggedInUser ? (
-        <div className="grid grid-cols-12 text-gray-600 w-full text-sm font-light ">
+        <div className="grid grid-cols-12 text-gray-600 w-full text-sm font-light dark:bg-gray-900 dark:text-gray-400">
           <div className={`${toggleSidebar ? "col-span-2" : "col-span-1"} `}>
             <Sidebar
               handleSidebarToggle={handleSidebarToggle}
               toggleSidebar={toggleSidebar}
+              theme={theme}
+              setTheme={setTheme}
             />
           </div>
           <div

@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useState, useEffect } from "react";
-import { getFromLocalStorage } from "../utils/localStorage";
+import { getFromSessionStorage } from "../utils/localStorage";
 
 interface IContext {
   loggedInUser: ILogin | undefined;
@@ -25,7 +25,7 @@ const AuthContextAPI: React.FC<Props> = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState<ILogin | undefined>();
 
   useEffect(() => {
-    const fromLocalStorage: ILogin | null = getFromLocalStorage();
+    const fromLocalStorage: ILogin | null = getFromSessionStorage();
     if (fromLocalStorage) {
       setLoggedInUser(fromLocalStorage);
     }

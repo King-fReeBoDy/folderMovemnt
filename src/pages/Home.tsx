@@ -4,6 +4,8 @@ import AddRecord from "../components/AddRecord";
 import EditRecord from "../components/EditRecord";
 import DeleteRecord from "../components/DeleteRecord";
 import { DataContext } from "../context/DataContext";
+import AddUser from "./AddUser";
+import CreateUser from "../components/CreateUser";
 
 const Home = () => {
   const [addPatientModal, setAddPatientModal] = useState(false);
@@ -20,6 +22,7 @@ const Home = () => {
   const handleDeletePatientModal = () => {
     setDeleteRecordModal(!deleteRecordModal);
   };
+
   return (
     <div>
       <div>
